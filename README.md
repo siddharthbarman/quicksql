@@ -1,0 +1,2 @@
+# quicksql
+Useful SQL scripts
