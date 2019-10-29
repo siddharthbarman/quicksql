@@ -49,7 +49,7 @@ with
 exec sp_xml_removedocument @idoc;
 
 -- Reading XML with namespaces correctly but renaming the columns and reading the node text
-declare @xmlWithNs nvarchar(max) = N'
+set @xmlWithNs = N'
 <addressBook xmlns="http://www.tempuri.org/addressBook.xsd">
     <entries xmlns:e="http://www.tempuri.org/addressBookProperties.xsd">
         <entry e:id="1" e:email="siddharthbarman@email.com">Siddharth Barman</entry>
@@ -57,7 +57,6 @@ declare @xmlWithNs nvarchar(max) = N'
     </entries>
 </addressBook>';
 
-declare @idoc int;
 exec sp_xml_preparedocument @idoc output, @xmlWithNs, N'<root xmlns:d="http://www.tempuri.org/addressBook.xsd" xmlns:e="http://www.tempuri.org/addressBookProperties.xsd"/>' ;
 
 select * from OPENXML(@idoc, N'/d:addressBook/d:entries/d:entry') 
